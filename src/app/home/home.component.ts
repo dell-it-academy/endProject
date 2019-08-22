@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   getFoaasDirect(){
     this.foaasService.getFoaasLink(this.foaas, this.field_1, this.field_2, this.field_3).subscribe( res => {
-      this.directFoaas = `${res}`;
+      this.directFoaas = res['value'];
       
       console.log(res);
       console.log(this.directFoaas);
