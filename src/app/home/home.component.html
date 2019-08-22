@@ -1,1 +1,22 @@
-<p>home works!</p>
+<div>
+    <select [(ngModel)] = "foaas">
+        <option *ngFor="let fo of foaasList" [ngValue]="fo">{{fo.name}}</option>
+    </select>
+
+    <br>
+    <button [disabled] = "foaas == null" type="button" class="btn btn-outline-primary" (click) = "send()">Get</button>
+    <br>
+    <br>
+</div>
+
+<div>
+    Field 1 <br><input [disabled] = "foaas == null || foaas.fields[0]==null" [(ngModel)] = "field_1" type="text"/><br> 
+    Field 2 <br><input [disabled] = "foaas == null || !(foaas.fields.length > 1)" [(ngModel)] = "field_2" type="text"/><br> 
+    Field 3 <br><input [disabled] = "foaas == null || !(foaas.fields.length > 2)" [(ngModel)] = "field_3" type="text"/><br> 
+</div>
+
+<br>
+<br>
+<div *ngIf="directFoaas.length > 0">
+    <a href={{directFoaas}}>Continue</a>
+</div>

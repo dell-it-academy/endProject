@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FoaasService } from './foaas.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  foaas: any;
+  foaasList: any = [];
+  field_1: string = '';
+  field_2: string = '';
+  field_3: string = '';
+  directFoaas: any = '';
+  constructor(private foaasService: FoaasService) {}
 
   ngOnInit() {
+    this.getFoaasOperations();
   }
 
+  send(){
+    this.getFoaasDirect();
+  }
+
+  getFoaasOperations(){
+    this.foaasService.getOperations().subscribe(data => {
+      this.foaasList = data;
+    });
+  }
+
+  getFoaasDirect(){
+    this.foaasService.getFoaasLink(this.foaas, this.field_1, this.field_2, this.field_3).subscribe( res => {
+      this.directFoaas = `${res}`;
+      
+      console.log(res);
+      console.log(this.directFoaas);
+    });
+  }
 }
+
