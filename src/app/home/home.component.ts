@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FoaasService } from './foaas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,14 +15,20 @@ export class HomeComponent implements OnInit {
   field_2: string = '';
   field_3: string = '';
   directFoaas: any = '';
-  constructor(private foaasService: FoaasService) {}
+
+  constructor(private foaasService: FoaasService, private router: Router) {}
 
   ngOnInit() {
     this.getFoaasOperations();
   }
 
   send(){
-    this.getFoaasDirect();
+    this.getFoaasLink();
+  }
+
+  removeOption(){
+    const index: number = this.foaasList.indexOf(this.foaas);
+    this.foaasList.splice(index, 1);
   }
 
   getFoaasOperations(){
@@ -30,13 +37,19 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getFoaasDirect(){
-    this.foaasService.getFoaasLink(this.foaas, this.field_1, this.field_2, this.field_3).subscribe( res => {
-      this.directFoaas = res['value'];
+  getFoaasLink(){
+    let s =  this.foaas.url.split(':');
+    let f1 = `${this.field_1}/`;
+    let f2 = `${this.field_2}/`;
+    let f3 = `${this.field_3}/`;
       
-      console.log(res);
-      console.log(this.directFoaas);
-    });
+    if(this.foaas.fields.length < 2){
+      f2 = '';
+      f3 = '';
+    }else if(this.foaas.fields.length < 3)
+      f3 = '';
+
+    this.directFoaas = `${this.foaasService.apiFoaas}${s[0]}${f1}${f2}${f3}`;
   }
 }
 
