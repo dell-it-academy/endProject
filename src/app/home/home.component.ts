@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FoaasService } from './foaas.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -29,6 +30,10 @@ export class HomeComponent implements OnInit {
   removeOption(){
     const index: number = this.foaasList.indexOf(this.foaas);
     this.foaasList.splice(index, 1);
+    this.foaas = null;
+    this.field_1 = '';
+    this.field_2 = '';
+    this.field_3 = '';
   }
 
   getFoaasOperations(){
